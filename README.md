@@ -1,6 +1,7 @@
 🏥 VOLL MED – API REST
 
-API REST desarrollada en Java + Spring Boot 3 para la gestión integral de médicos, pacientes y consultas médicas, implementando un sistema modular de validaciones, arquitectura limpia, DTOs, reglas de negocio y documentación automática con Swagger (SpringDoc OpenAPI).
+API REST desarrollada en Java + Spring Boot 3 para la gestión integral de médicos, pacientes y consultas médicas.
+Incluye arquitectura limpia, DTOs, validaciones modulares, reglas de negocio encapsuladas y documentación interactiva con Swagger (SpringDoc OpenAPI).
 
 🚀 Tecnologías utilizadas
 
@@ -27,7 +28,7 @@ Lombok (opcional)
 
 Registrar médico (POST)
 
-Listar médicos con paginación (GET)
+Listar con paginación (GET)
 
 Actualizar médico (PUT)
 
@@ -37,16 +38,15 @@ Eliminación lógica (DELETE)
 
 CRUD completo siguiendo el mismo patrón de médicos
 
-✔ Gestión de Consultas Médicas
+✔ Gestión de Consultas
 
 Reservar consulta con validaciones
 
 Cancelar consulta aplicando reglas de negocio
 
-Sistema extensible basado en interfaces
+Sistema extensible basado en interfaces y validadores
 
 📁 Arquitectura del proyecto
-```
 src/main/java/med/voll/api/
     ├── controller/
     │     ├── MedicoController.java
@@ -61,48 +61,42 @@ src/main/java/med/voll/api/
     │     │     ├── ReservaDeConsultas.java
     │     │     └── validaciones/
     │     │           ├── reserva/
-    │     │           │      ├── ValidadorDeConsultas.java
-    │     │           │      └── (validadores de reserva)
     │     │           └── cancelamiento/
-    │     │                  ├── ValidadorDeCancelamiento.java
-    │     │                  ├── ValidadorCancelamientoHorario.java
-    │     │                  └── (otros validadores)
     │     │
     │     ├── medico/
     │     └── paciente/
     │
     ├── infra/
-    │     └── errors/ (manejador de excepciones)
+    │     └── errors/
     │
     └── VollMedApiApplication.java
-```
 
 🧠 Sistema de Validaciones
 🔹 Validaciones al reservar consulta
 
-Todos los validadores implementan:
-```
+Interfaz:
+
 public interface ValidadorDeConsultas {
     void validar(DatosReservaConsulta datos);
 }
-```
 
-Y se ejecutan automáticamente:
-```
+
+Inyección automática:
+
 @Autowired
 private List<ValidadorDeConsultas> validadores;
-```
+
 🔹 Validaciones al cancelar consulta
 
-INTERFAZ:
-```
+Interfaz:
+
 public interface ValidadorDeCancelamiento {
     void validar(DatosCancelamientoConsulta datos);
 }
-```
 
-EJEMPLO:
-```
+
+Ejemplo:
+
 @Component
 public class ValidadorCancelamientoHorario implements ValidadorDeCancelamiento {
     @Override
@@ -110,68 +104,67 @@ public class ValidadorCancelamientoHorario implements ValidadorDeCancelamiento {
         // lógica
     }
 }
-```
 
-AUTO-INYECCIÓN:
-```
+
+Auto-inyección:
+
 @Autowired
 private List<ValidadorDeCancelamiento> validadoresCancelamiento;
-```
-📚 Documentación interactiva – Swagger UI
 
-Gracias a SpringDoc, la API expone su documentación en:
+📚 Documentación interactiva — Swagger UI
 
-📄 Swagger UI:
-```
+Swagger UI
+
 http://localhost:8080/swagger-ui/index.html
-```
 
-📄 OpenAPI JSON:
-```
+
+OpenAPI JSON
+
 http://localhost:8080/v3/api-docs
-```
 
-Dependencia incluida:
-```
+
+Dependencia:
+
 <dependency>
     <groupId>org.springdoc</groupId>
     <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
     <version>2.3.0</version>
 </dependency>
-```
 
 🧪 Endpoints principales
 🩺 Médicos
-Registrar médico
-```
+
+Registrar
+
 POST /medicos
-```
 
-Listar médicos
-```
+
+Listar
+
 GET /medicos
-```
 
-Actualizar médico
-```
+
+Actualizar
+
 PUT /medicos
-```
 
-Eliminar médico
-```
+
+Eliminar
+
 DELETE /medicos/{id}
-```
+
 👥 Pacientes
 
-CRUD similar al de médicos.
+CRUD con la misma estructura que médicos.
 
 📅 Consultas
-Reservar consulta
-```
-POST /consultas
-```
 
-Ejemplo:
+Reservar consulta
+
+POST /consultas
+
+
+Ejemplo JSON:
 
 {
   "idPaciente": 1,
@@ -180,27 +173,24 @@ Ejemplo:
   "especialidad": "CARDIOLOGIA"
 }
 
-Cancelar consulta
-```
-DELETE /consultas
-```
 
-Ejemplo:
-```
+Cancelar consulta
+
+DELETE /consultas
+
+
+Ejemplo JSON:
+
 {
   "idConsulta": 12,
   "motivo": "PACIENTE_DESISTIO"
 }
-```
+
 🔧 Configuración — MySQL
-
-Base de datos:
-```
+Crear base:
 CREATE DATABASE vollmed_api;
-```
 
-application.properties:
-```
+application.properties
 spring.datasource.url=jdbc:mysql://localhost:3306/vollmed_api
 spring.datasource.username=TU_USUARIO
 spring.datasource.password=TU_PASSWORD
@@ -208,37 +198,37 @@ spring.datasource.password=TU_PASSWORD
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
-```
+
+▶ Ejecución
+🔹 Compilar
+mvn clean install
+
+🔹 Ejecutar con Maven
+mvn spring-boot:run
+
+🔹 Ejecutar JAR con perfil
+java -jar target/api-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+
+🔹 Usando variables de entorno
+set DATASOURCE_URL=jdbc:mysql://localhost:3306/vollmed_api
+set DATASOURCE_USERNAME=su_usuario
+set DATASOURCE_PASSWORD=su_password
+
+java -jar target/api-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+
 🐳 Docker (opcional)
-
-Dockerfile:
-
-```
+Dockerfile
 FROM eclipse-temurin:17-jdk
 COPY target/vollmed-api.jar app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
-```
 
-Build:
-```
+Build
 mvn clean package
 docker build -t vollmed-api .
 docker run -p 8080:8080 vollmed-api
-````
-▶ Ejecución
 
-Compilar:
-```
-mvn clean install
-```
-
-Ejecutar:
-
-```
-mvn spring-boot:run
-```
-🙌 Autor
+👤 Autor
 
 Jorge Gustavo Martinez
 Analista Programador – Backend / Fullstack
-Tecnologías: Java, Spring Boot, PHP/Laravel, Python, SQL, Docker
+Especialidades: Java, Spring Boot, PHP/Laravel, Python, SQL, Docker

@@ -29,7 +29,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var tokenJWT = recuperarToken(request);
 
         // muestra nuestro token;
-        System.out.println(tokenJWT);
+//        System.out.println(tokenJWT);
         if (tokenJWT != null) {
             var subject = tokenService.getSubject(tokenJWT);
             var usuario = repository.findByLogin(subject);
