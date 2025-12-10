@@ -170,20 +170,20 @@ Reservar consulta
 ```
 POST /consultas
 ```
-
 Ejemplo:
-
+```
 {
   "idPaciente": 1,
   "idMedico": null,
   "fecha": "2025-02-25T10:00:00",
   "especialidad": "CARDIOLOGIA"
 }
+```
 
 Cancelar consulta
-```
+
+
 DELETE /consultas
-```
 
 Ejemplo:
 ```
@@ -260,25 +260,25 @@ Los métodos comúnmente utilizados son:
 🔹 Deploy manual (servidor propio)
 
 Compilar:
-
+```
 mvn clean package
-
+```
 
 Ejecutar:
-
+```
 java -jar target/api-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
-
+```
 🔹 Deploy con Docker
 
 Build de la imagen:
-
+```
 docker build -t vollmed-api .
-
+```
 
 Ejecutar contenedor:
-
+```
 docker run -p 8080:8080 vollmed-api
-
+```
 🔹 Deploy en plataformas cloud (opcional)
 
 Railway
