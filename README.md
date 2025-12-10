@@ -1,7 +1,6 @@
 🏥 VOLL MED – API REST
 
-API REST desarrollada en Java + Spring Boot 3 para la gestión integral de médicos, pacientes y consultas médicas.
-Incluye arquitectura limpia, DTOs, validaciones modulares, reglas de negocio encapsuladas y documentación interactiva con Swagger (SpringDoc OpenAPI).
+API REST desarrollada en Java + Spring Boot 3 para la gestión integral de médicos, pacientes y consultas médicas, implementando un sistema modular de validaciones, arquitectura limpia, DTOs, reglas de negocio y documentación automática con Swagger (SpringDoc OpenAPI).
 
 🚀 Tecnologías utilizadas
 
@@ -28,7 +27,7 @@ Lombok (opcional)
 
 Registrar médico (POST)
 
-Listar con paginación (GET)
+Listar médicos con paginación (GET)
 
 Actualizar médico (PUT)
 
@@ -38,15 +37,16 @@ Eliminación lógica (DELETE)
 
 CRUD completo siguiendo el mismo patrón de médicos
 
-✔ Gestión de Consultas
+✔ Gestión de Consultas Médicas
 
 Reservar consulta con validaciones
 
 Cancelar consulta aplicando reglas de negocio
 
-Sistema extensible basado en interfaces y validadores
+Sistema extensible basado en interfaces
 
 📁 Arquitectura del proyecto
+```
 src/main/java/med/voll/api/
     ├── controller/
     │     ├── MedicoController.java
@@ -61,7 +61,12 @@ src/main/java/med/voll/api/
     │     │     ├── ReservaDeConsultas.java
     │     │     └── validaciones/
     │     │           ├── reserva/
+    │     │           │      ├── ValidadorDeConsultas.java
+    │     │           │      └── (validadores de reserva)
     │     │           └── cancelamiento/
+    │     │                  ├── ValidadorDeCancelamiento.java
+    │     │                  ├── ValidadorCancelamientoHorario.java
+    │     │                  └── (otros validadores)
     │     │
     │     ├── medico/
     │     └── paciente/
@@ -212,6 +217,7 @@ Dockerfile:
 FROM eclipse-temurin:17-jdk
 COPY target/vollmed-api.jar app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
+```
 
 Build:
 ```
