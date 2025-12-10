@@ -237,6 +237,62 @@ Ejecutar:
 ```
 mvn spring-boot:run
 ```
+
+🧪 Testing
+
+Actualmente la API no cuenta con un módulo formal de pruebas automatizadas, pero el proyecto está preparado para incorporar:
+
+Unit Tests con JUnit 5
+
+Integration Tests con Spring Boot Test
+
+Mocking con Mockito
+
+Test Containers para pruebas reales con MySQL en Docker
+
+Próximamente se incluirá una suite completa de tests para asegurar la estabilidad de cada módulo (médicos, pacientes y consultas).
+
+🚀 Deployment
+
+La aplicación puede desplegarse fácilmente en cualquier entorno compatible con Java 17.
+Los métodos comúnmente utilizados son:
+
+🔹 Deploy manual (servidor propio)
+
+Compilar:
+
+mvn clean package
+
+
+Ejecutar:
+
+java -jar target/api-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+
+🔹 Deploy con Docker
+
+Build de la imagen:
+
+docker build -t vollmed-api .
+
+
+Ejecutar contenedor:
+
+docker run -p 8080:8080 vollmed-api
+
+🔹 Deploy en plataformas cloud (opcional)
+
+Railway
+
+Render
+
+Fly.io
+
+AWS EC2 / Elastic Beanstalk
+
+Kubernetes
+
+La aplicación está preparada para funcionar sin cambios en cualquier proveedor cloud.
+
 🙌 Autor
 
 Jorge Gustavo Martinez
